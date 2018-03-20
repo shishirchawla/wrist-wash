@@ -2,7 +2,17 @@
 *.swp
 *.log
 *.DS_Store
+nohup.out
+hvite.mlf
+reco.mlf
 
 htkdata
 *-test-data
 *-train-data
+
+model/*
+!model/proto
+model/proto/*
+!model/proto/createhmmprototypes.sh
+!model/proto/generate_hmm_prototype.py
+
