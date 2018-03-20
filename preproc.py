@@ -83,15 +83,16 @@ def writeLosoFiles(session_dict):
     test_user_session = segment_key[0].split('_')[1]
     activity_type = segment_key[1]
 
-    path = './user'+test_user_id+'-train-data'
+    trainpath = './user'+test_user_id+'-train-data'
+    testpath = './user'+test_user_id+'-test-data'
 
     for i in range(config['num_session_per_user']):
       if i+1 != int(test_user_session):
-        with open(os.path.join(path, "trainlist"+str(i+1)+"_act_"+str(activity_type)+".txt"), 'a') as train_file:
+        with open(os.path.join(trainpath, "trainlist"+str(i+1)+"_act_"+str(activity_type)+".txt"), 'a') as train_file:
           for segment in segment_files:
             train_file.write(segment + newline)
       else:
-        with open(os.path.join(path, "testlist"+str(i+1)+".txt"), 'a') as test_file:
+        with open(os.path.join(testpath, "testlist"+str(i+1)+".txt"), 'a') as test_file:
           for segment in segment_files:
             test_file.write(segment + newline)
 
