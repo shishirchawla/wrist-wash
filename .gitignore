@@ -1,0 +1,8 @@
+*.pyc
+*.swp
+*.log
+*.DS_Store
+
+htkdata
+*-test-data
+*-train-data
