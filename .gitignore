@@ -5,6 +5,7 @@
 nohup.out
 hvite.mlf
 reco.mlf
+*.mlf
 
 htkdata
 *-test-data
@@ -15,4 +16,6 @@ model/*
 model/proto/*
 !model/proto/createhmmprototypes.sh
 !model/proto/generate_hmm_prototype.py
+
+scripts/*.txt
 

@@ -18,14 +18,15 @@ config = {
   'sampling_freq'               : 50,   # in hz
   'activity_types'              : [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15],
   'null_class_label'            : 0,
-  'num_samples_per_sub_window'  : 50,
+  'num_samples_per_sub_window'  : 10,
   'sliding_window_overlap'      : 1.0,  # 1 means no overlap
 
   # null class config
-  'ignore_null_class'           : 0,
+  'ignore_null_class'           : 1,
 
   # number of features
-  'num_features'  : ((10*7)+7), # ecdf with 10 components + mean
+  #'num_features'  : ((3*7)+7), # ecdf with 3 components + mean
+  'num_features'  : (7*4)+(3*7),
 
   'write_train_files' : 1,
   'write_test_files' : 1,
@@ -40,7 +41,7 @@ config = {
 
   # HMM properties
   'window_size'       : 1.0,    # in seconds
-  'sub_window_size'   : 0.1,    # in seconds
+  'sub_window_size'   : 0.04,    # in seconds
 
   'loso'              : 1,      # leave on subject out (loso)
 

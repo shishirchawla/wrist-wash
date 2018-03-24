@@ -12,6 +12,14 @@ def mean(data):
 def stddev(data):
   return data.std(0)
 
+# Kurtosis
+def kurtosis(data):
+  return scipy.stats.kurtosis(data)
+
+# Skew
+def skew(data):
+  return scipy.stats.skew(data)
+
 # ECDF
 def ecdf(data, components=10):
     #
