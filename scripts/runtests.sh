@@ -1,7 +1,7 @@
 #!/bin/bash
 
-users=(1 2)
-sessions=(1 2 3 4)
+users=(1 2 3 4 5 6 7 8 9 11)
+sessions=(1 2 3 4 5 6 7 8 9)
 
 
 # for each user do leave one session out

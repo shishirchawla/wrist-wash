@@ -44,6 +44,10 @@ def process_data(train_dir, train_files):
       if config['ignore_null_class'] and activity_type == config['null_class_label']:
           continue
 
+      # ignore activities
+      if activity_type in config['ignore_activities']:
+        continue
+
       htk_file_name = config['output_dir']+train_file+"_act_"+str(activity_type)+"_instance_"+str(activity_group_no)+".mfcc"
       activity_features = compute_features(df, config['num_features'])
       if activity_features.shape[0] != 0:
@@ -72,11 +76,31 @@ def writeLosoFiles(session_dict):
     for i in range(config['num_session_per_user']):
       for activity_type in config['activity_types']:
         open(os.path.join(path, "trainlist"+str(i+1)+"_act_"+str(activity_type)+".txt"), 'w').close()
+        open(os.path.join(path, "trainlist"+"_act_"+str(activity_type)+".txt"), 'w').close()
 
   for user in config['users']:
     path = './user' + user + '-test-data'
+    open(os.path.join(path, "testlist.txt"), 'w').close()
     for i in range(config['num_session_per_user']):
       open(os.path.join(path, "testlist"+str(i+1)+".txt"), 'w').close()
+
+  # write leave one subject out files
+  for user in config['users']:
+    trainpath = './user' + user + '-train-data'
+    testpath = './user' + user + '-test-data'
+
+    with open(os.path.join(testpath, "testlist.txt"), 'a') as test_file:
+      for segment_key, segment_files in session_dict.iteritems():
+        train_user_id = segment_key[0].split('/')[0]
+        activity_type = segment_key[1]
+
+        if train_user_id != user:
+          with open(os.path.join(trainpath, "trainlist"+"_act_"+str(activity_type)+".txt"), 'a') as train_file:
+            for segment in segment_files:
+              train_file.write(segment + newline)
+        else:
+          for segment in segment_files:
+            test_file.write(segment + newline)
 
   for segment_key, segment_files in session_dict.iteritems():
     test_user_id = segment_key[0].split('/')[0]
@@ -86,6 +110,7 @@ def writeLosoFiles(session_dict):
     trainpath = './user'+test_user_id+'-train-data'
     testpath = './user'+test_user_id+'-test-data'
 
+    # write leave one session out files
     for i in range(config['num_session_per_user']):
       if i+1 != int(test_user_session):
         with open(os.path.join(trainpath, "trainlist"+str(i+1)+"_act_"+str(activity_type)+".txt"), 'a') as train_file:
@@ -132,6 +157,11 @@ def loadDataset(filepath):
 
   data = pd.read_csv(filepath, sep=",", names=column_names, usecols=column_indexes)
   data.dropna(axis=0, inplace=True)
+
+  # sub sample data based on config TODO
+  selected_index = np.arange(0, len(data.index), config['sub_sampling_factor'])
+  data = data.ix[selected_index]
+
   return data
 
 # The following code has been adapted from
@@ -177,7 +207,7 @@ def windows(data, size):
 def subwindows(data, size):
     start = 0
     #while start + config['num_samples_per_sub_window'] < data.count():
-    while start + (int(size)*2) < data.count():
+    while start + int(size) < data.count():
         yield start, start + config['num_samples_per_sub_window']
         start += int(size)
 

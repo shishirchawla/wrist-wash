@@ -1,22 +1,21 @@
 VERSION=1.0
-N=17   L=29   
+N=16   L=27   
 I=0    W=!NULL               
 I=1    W=!NULL               
-I=2    W=ACTIVITY1           
+I=2    W=ACTIVITY4           
 I=3    W=!NULL               
-I=4    W=ACTIVITY2           
-I=5    W=ACTIVITY3           
-I=6    W=ACTIVITY4           
-I=7    W=ACTIVITY5           
-I=8    W=ACTIVITY6           
-I=9    W=ACTIVITY7           
-I=10   W=ACTIVITY9           
-I=11   W=ACTIVITY10          
-I=12   W=ACTIVITY11          
-I=13   W=ACTIVITY12          
-I=14   W=ACTIVITY13          
-I=15   W=ACTIVITY14          
-I=16   W=ACTIVITY15          
+I=4    W=ACTIVITY5           
+I=5    W=ACTIVITY6           
+I=6    W=ACTIVITY7           
+I=7    W=ACTIVITY8           
+I=8    W=ACTIVITY9           
+I=9    W=ACTIVITY10          
+I=10   W=ACTIVITY11          
+I=11   W=ACTIVITY12          
+I=12   W=ACTIVITY13          
+I=13   W=ACTIVITY14          
+I=14   W=ACTIVITY15          
+I=15   W=ACTIVITY16          
 J=0     S=3    E=1    
 J=1     S=0    E=2    
 J=2     S=2    E=3    
@@ -32,17 +31,15 @@ J=11    S=12   E=3
 J=12    S=13   E=3    
 J=13    S=14   E=3    
 J=14    S=15   E=3    
-J=15    S=16   E=3    
-J=16    S=0    E=4    
-J=17    S=0    E=5    
-J=18    S=0    E=6    
-J=19    S=0    E=7    
-J=20    S=0    E=8    
-J=21    S=0    E=9    
-J=22    S=0    E=10   
-J=23    S=0    E=11   
-J=24    S=0    E=12   
-J=25    S=0    E=13   
-J=26    S=0    E=14   
-J=27    S=0    E=15   
-J=28    S=0    E=16   
+J=15    S=0    E=4    
+J=16    S=0    E=5    
+J=17    S=0    E=6    
+J=18    S=0    E=7    
+J=19    S=0    E=8    
+J=20    S=0    E=9    
+J=21    S=0    E=10   
+J=22    S=0    E=11   
+J=23    S=0    E=12   
+J=24    S=0    E=13   
+J=25    S=0    E=14   
+J=26    S=0    E=15   

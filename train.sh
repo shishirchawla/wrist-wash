@@ -11,7 +11,7 @@ done
 
 train_data_dir="user${USR}-train-data"
 train_steps=3
-activities=(1 2 3 4 5 6 7 9 10 11 12 13 14 15)
+activities=(4 5 6 7 8 9 10 11 12 13 14 15 16)
 
 # Train
 # Cleanup old hmms
@@ -25,12 +25,21 @@ done
 for i in ${activities[@]}
 do
   echo "Initialize HMM..."
-  HInit -A -D -w 1.0 -T 1 -S $train_data_dir/trainlist${SESSION}_act_${i}.txt -M model/hmm0 model/proto/Activity$i
+
+  #if [ "$TYPE" = "loso" ]; then
+    HInit -A -D -w 1.0 -T 1 -S $train_data_dir/trainlist_act_${i}.txt -M model/hmm0 model/proto/Activity$i
+  #else
+  #  HInit -A -D -w 1.0 -T 1 -S $train_data_dir/trainlist${SESSION}_act_${i}.txt -M model/hmm0 model/proto/Activity$i
+  #fi
 
   echo "Training HMMS..."
   for j in $(seq 1 $train_steps)
   do
-    HRest -A -D -T 1 -v 0.00000000001 -S $train_data_dir/trainlist${SESSION}_act_${i}.txt -M model/hmm$j -H model/hmm$((j-1))/Activity$i Activity$i
+  #  if [ "${TYPE}" = "loso" ]; then
+      HRest -A -D -T 1 -v 0.00000000001 -S $train_data_dir/trainlist_act_${i}.txt -M model/hmm$j -H model/hmm$((j-1))/Activity$i Activity$i
+  #  else
+  #    HRest -A -D -T 1 -v 0.00000000001 -S $train_data_dir/trainlist${SESSION}_act_${i}.txt -M model/hmm$j -H model/hmm$((j-1))/Activity$i Activity$i
+  #  fi
   done
 done
 

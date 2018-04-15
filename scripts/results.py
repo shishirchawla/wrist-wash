@@ -39,16 +39,21 @@ if __name__ == '__main__':
     print 'predfile and truthfile required'
     sys.exit()
 
-  label_map = {"activity1":"Step 1",
-  "activity2":"Step 2", "activity3":"Step 3", "activity4":"Step 4",
-  "activity5":"Step 5", "activity6":"Step 6", "activity7":"Step 7",
-  "activity8":"Step 8", "activity9":"Step 9", "activity10":"Step 10",
-  "activity11":"Step 11", "activity12":"Step 12", "activity13":"Step 13",
-  "activity14":"Step 14", "activity15":"Step 15"}
+#  label_map = {"activity1":"Step 1",
+#  "activity2":"Step 2", "activity3":"Step 3", "activity4":"Step 4",
+#  "activity5":"Step 5", "activity6":"Step 6", "activity7":"Step 7",
+#  "activity8":"Step 8", "activity9":"Step 9", "activity10":"Step 10",
+#  "activity11":"Step 11", "activity12":"Step 12", "activity13":"Step 13",
+#  "activity14":"Step 14", "activity15":"Step 15", "activity16":"Step 16"}
+  label_map = {"activity4":"Step 1",
+  "activity5":"Step 2", "activity6":"Step 3", "activity7":"Step 4",
+  "activity8":"Step 5", "activity9":"Step 6", "activity10":"Step 7",
+  "activity11":"Step 8", "activity12":"Step 9", "activity13":"Step 10",
+  "activity14":"Step 11", "activity15":"Step 12", "activity16":"Step 13"}
 
   label_map_values = ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5",
     "Step 6", "Step 7", "Step 8", "Step 9", "Step 10",
-    "Step 11", "Step 12", "Step 13", "Step 14", "Step 15"]
+    "Step 11", "Step 12", "Step 13"]
 
   y_truth = []
   y_pred = []
