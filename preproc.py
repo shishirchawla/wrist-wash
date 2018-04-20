@@ -62,7 +62,7 @@ def process_data(train_dir, train_files):
 
   if config['loso']:
     writeLosoFiles(session_dict)
-  else:
+  else: # FIXME dead code remove this
     if config['write_train_files']:
       writeTrainFiles(activity_trainfile_dict)
     if config['write_test_files']:
@@ -102,6 +102,7 @@ def writeLosoFiles(session_dict):
           for segment in segment_files:
             test_file.write(segment + newline)
 
+  # write leave one session out files
   for segment_key, segment_files in session_dict.iteritems():
     test_user_id = segment_key[0].split('/')[0]
     test_user_session = segment_key[0].split('_')[1]
@@ -110,7 +111,6 @@ def writeLosoFiles(session_dict):
     trainpath = './user'+test_user_id+'-train-data'
     testpath = './user'+test_user_id+'-test-data'
 
-    # write leave one session out files
     for i in range(config['num_session_per_user']):
       if i+1 != int(test_user_session):
         with open(os.path.join(trainpath, "trainlist"+str(i+1)+"_act_"+str(activity_type)+".txt"), 'a') as train_file:
@@ -178,7 +178,7 @@ def writeFeaturesToHTK(features, output_file_name):
   samples_byte = bytearray(struct.pack(">I", num_samples))
   # For sampling frequency of 100 hz (100 * 10^2 * x = 10^9)
   # FIXME make this value dynamic based on config
-  samp_period_byte = bytearray(struct.pack(">I", 1000000))
+  samp_period_byte = bytearray(struct.pack(">I", 600000))
   # 4 bytes for each entry
   samp_size_byte = bytearray(struct.pack(">h", num_items_per_sample*4))
   # Typecode for MFCC

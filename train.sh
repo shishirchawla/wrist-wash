@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # Read user and session info
-while getopts u:s: option
+while getopts ":u:s:t:" option
 do
   case "${option}" in
     u) USR=${OPTARG};;
     s) SESSION=${OPTARG};;
+    t) TYPE=${OPTARG};;
   esac
 done
 
@@ -26,20 +27,20 @@ for i in ${activities[@]}
 do
   echo "Initialize HMM..."
 
-  #if [ "$TYPE" = "loso" ]; then
+  if [ ${TYPE} = "loso" ]; then
     HInit -A -D -w 1.0 -T 1 -S $train_data_dir/trainlist_act_${i}.txt -M model/hmm0 model/proto/Activity$i
-  #else
-  #  HInit -A -D -w 1.0 -T 1 -S $train_data_dir/trainlist${SESSION}_act_${i}.txt -M model/hmm0 model/proto/Activity$i
-  #fi
+  else
+    HInit -A -D -w 1.0 -T 1 -S $train_data_dir/trainlist${SESSION}_act_${i}.txt -M model/hmm0 model/proto/Activity$i
+  fi
 
   echo "Training HMMS..."
   for j in $(seq 1 $train_steps)
   do
-  #  if [ "${TYPE}" = "loso" ]; then
+    if [ ${TYPE} = "loso" ]; then
       HRest -A -D -T 1 -v 0.00000000001 -S $train_data_dir/trainlist_act_${i}.txt -M model/hmm$j -H model/hmm$((j-1))/Activity$i Activity$i
-  #  else
-  #    HRest -A -D -T 1 -v 0.00000000001 -S $train_data_dir/trainlist${SESSION}_act_${i}.txt -M model/hmm$j -H model/hmm$((j-1))/Activity$i Activity$i
-  #  fi
+    else
+      HRest -A -D -T 1 -v 0.00000000001 -S $train_data_dir/trainlist${SESSION}_act_${i}.txt -M model/hmm$j -H model/hmm$((j-1))/Activity$i Activity$i
+    fi
   done
 done
 
