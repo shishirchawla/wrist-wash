@@ -7,7 +7,7 @@ def parse_to_human(htk_output_file):
   global last
 
   with open(htk_output_file, 'r') as f:
-    line = f.readline() # ignore first line (this line should read #!MLF!#
+    line = f.readline() # ignore first line (this line should read #!MLF!# )
     while line:
       last = float(-1000)/50
       line = f.readline()   # read file name
@@ -20,6 +20,7 @@ def parse_to_human(htk_output_file):
             if line.startswith("."):
               break
             write_in_ms(of, line)
+
             line = f.readline()
 
 

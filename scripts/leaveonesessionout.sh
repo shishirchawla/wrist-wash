@@ -16,8 +16,8 @@ do
   for session in ${sessions[@]}
   do
     cd ..
-    ./train.sh -u $usr -s $session -t session
-    ./test.sh -u $usr -s $session -t session
+    ./train.sh -u $usr -s $session -t loso
+    ./test.sh -u $usr -s $session -t loso
 
     cd ./scripts
     #awk '/mfcc$/{nr[NR+1]}; NR in nr' ../reco_user${usr}_session${session}.mlf | awk '{print $1}' >> $usr-pred.txt

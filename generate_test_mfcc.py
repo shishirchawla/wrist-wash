@@ -131,7 +131,7 @@ def segment_signal(data, window_size=int(config['window_size'])*config['sampling
 ########################################################
 # Feature extraction related functions.                #
 ########################################################
-def compute_features(df, num_features, window_size=int(float(config['sub_window_size'])*config['sampling_freq'])):
+def compute_features(df, num_features, window_size=int(float(config['sub_window_size'])*config['sampling_freq']/config['sub_sampling_factor'])):
   features = np.empty((0, num_features))
 
   if df.isnull().values.any():
