@@ -1,14 +1,14 @@
 #!/bin/bash
 
-#users=(1 2 3 4 5 6 7 8 9 11)
-users=(1)
+users=(1 2 3 4 5 6 7 8 9 11)
+#users=(1)
 
 # for each user do leave one subject out
 for usr in ${users[@]}
 do
   # empty pred and truth files
-  cat /dev/null > $usr-pred.txt
-  cat /dev/null > $usr-truth.txt
+  #cat /dev/null > $usr-pred.txt
+  #cat /dev/null > $usr-truth.txt
 
   cd ..
   ./train.sh -u $usr -t lopo

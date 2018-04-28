@@ -1,5 +1,8 @@
 .idea
 
+*-pred.txt
+*-truth.txt
+
 *.pyc
 *.swp
 *.log

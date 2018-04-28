@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#users=(1 2 3 4 5 6 7 8 9 11)
-users=(1)
+users=(1 2 3 4 5 6 7 8 9 11)
+#users=(1)
 #sessions=(1)
 sessions=(1 2 3 4 5 6 7 8 9)
 
@@ -10,8 +10,8 @@ sessions=(1 2 3 4 5 6 7 8 9)
 for usr in ${users[@]}
 do
   # empty pred and truth files
-  cat /dev/null > $usr-pred.txt
-  cat /dev/null > $usr-truth.txt
+  #cat /dev/null > $usr-pred.txt
+  #cat /dev/null > $usr-truth.txt
 
   for session in ${sessions[@]}
   do
