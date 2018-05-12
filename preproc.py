@@ -49,9 +49,11 @@ def process_data(train_dir, train_files):
         continue
 
       htk_file_name = config['output_dir']+train_file+"_act_"+str(activity_type)+"_instance_"+str(activity_group_no)+".mfcc"
-      activity_features = compute_features(df, config['num_features'])
+      # activity_features = compute_features(df, config['num_features'])
+      activity_features = raw_data(df)
       if activity_features.shape[0] != 0:
-        writeFeaturesToHTK(activity_features, htk_file_name)
+        # writeFeaturesToHTK(activity_features, htk_file_name)
+        writeRawDataToHTK(activity_features, htk_file_name)
         if config['loso']:
           session_dict[(train_file, activity_type)].append(htk_file_name)
         else:
@@ -202,6 +204,31 @@ def writeFeaturesToHTK(features, output_file_name):
     for eachbyte in byte_array:
         binFile.write(eachbyte)
 
+def writeRawDataToHTK(features, output_file_name):
+  byte_array = []
+
+  for x in np.nditer(features, order='C'):
+    byte_array.append(bytearray(struct.pack(">f", x)))
+
+  num_items_per_sample = features.shape[1]
+  num_samples = int(len(byte_array)/num_items_per_sample)
+
+  samples_byte = bytearray(struct.pack(">I", num_samples))
+  # For sampling frequency of 100 hz (100 * 10^2 * x = 10^9)
+  # FIXME make this value dynamic based on config
+  samp_period_byte = bytearray(struct.pack(">I", 200000))
+  # 4 bytes for each entry
+  samp_size_byte = bytearray(struct.pack(">h", num_items_per_sample*4))
+  # Typecode for MFCC
+  parm_kind_byte = bytearray(struct.pack(">h", 6))
+
+  with open(output_file_name, "wb") as binFile:
+    binFile.write(samples_byte)
+    binFile.write(samp_period_byte)
+    binFile.write(samp_size_byte)
+    binFile.write(parm_kind_byte)
+    for eachbyte in byte_array:
+        binFile.write(eachbyte)
 
 ########################################################
 # Utility functions for creating and processing        #
@@ -240,6 +267,10 @@ def segment_signal(data, window_size=int(config['window_size'])*config['sampling
 ########################################################
 # Feature extraction related functions.                #
 ########################################################
+def raw_data(df):
+  data = df.as_matrix(columns=['ax', 'ay', 'az', 'gx', 'gy', 'gz', 'mic'])
+  return data
+
 def compute_features(df, num_features, window_size=int(float(config['sub_window_size'])*config['sampling_freq']/config['sub_sampling_factor'])):
   features = np.empty((0, num_features))
 

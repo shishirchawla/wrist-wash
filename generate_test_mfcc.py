@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import logging
 from collections import defaultdict
+from preproc import writeRawDataToHTK, raw_data
 
 log_config = config['logging']
 logger = logging.getLogger(__name__)
@@ -21,9 +22,11 @@ def main():
     df = loadDataset(test_file_path)
 
     htk_file_name = config['output_dir']+test_file+"_completesession.mfcc"
-    activity_features = compute_features(df, config['num_features'])
+    #activity_features = compute_features(df, config['num_features'])
+    activity_features = raw_data(df)
     if activity_features.shape[0] != 0:
-      writeFeaturesToHTK(activity_features, htk_file_name)
+      #writeFeaturesToHTK(activity_features, htk_file_name)
+      writeRawDataToHTK(activity_features, htk_file_name)
       user_id = test_file.split('/')[0]
       user_session = int(test_file.split('_')[1])
       session_dict[(user_id, user_session)].append(htk_file_name)
