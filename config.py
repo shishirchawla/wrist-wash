@@ -3,8 +3,9 @@
 config = {
   'dataset_dir'   : '/Users/schawla/dev/wrist-wash/dataset/3.11',
   'dataset_dir_withoutnull'   : '/Users/schawla/dev/wrist-wash/dataset/3.11-withoutnull',
-  'users'         : ['1', '2', '3', '4', '5', '6', '7', '8', '9', '11'],
+  'users'         : ['1', '2', '3', '4', '5', '6', '7', '8', '9', '11', '10', '12'],
   'num_session_per_user' : 9,
+  'user_adapt_test_sessions' : [7, 8, 9],
   'train_files'   : ['1/session_1_labels.csv', '1/session_2_labels.csv', '1/session_3_labels.csv', '1/session_4_labels.csv', '1/session_5_labels.csv', '1/session_6_labels.csv', '1/session_7_labels.csv', '1/session_8_labels.csv', '1/session_9_labels.csv',
                      '2/session_1_labels.csv', '2/session_2_labels.csv', '2/session_3_labels.csv', '2/session_4_labels.csv', '2/session_5_labels.csv', '2/session_6_labels.csv', '2/session_7_labels.csv', '2/session_8_labels.csv', '2/session_9_labels.csv',
                      '3/session_1_labels.csv', '3/session_2_labels.csv', '3/session_3_labels.csv', '3/session_4_labels.csv', '3/session_5_labels.csv', '3/session_6_labels.csv', '3/session_7_labels.csv', '3/session_8_labels.csv', '3/session_9_labels.csv',
@@ -25,7 +26,9 @@ config = {
                               '7/session_1_labels_withoutnull.csv', '7/session_2_labels_withoutnull.csv', '7/session_3_labels_withoutnull.csv', '7/session_4_labels_withoutnull.csv', '7/session_5_labels_withoutnull.csv', '7/session_6_labels_withoutnull.csv', '7/session_7_labels_withoutnull.csv', '7/session_8_labels_withoutnull.csv', '7/session_9_labels_withoutnull.csv',
                               '8/session_1_labels_withoutnull.csv', '8/session_2_labels_withoutnull.csv', '8/session_3_labels_withoutnull.csv', '8/session_4_labels_withoutnull.csv', '8/session_5_labels_withoutnull.csv', '8/session_6_labels_withoutnull.csv', '8/session_7_labels_withoutnull.csv', '8/session_8_labels_withoutnull.csv', '8/session_9_labels_withoutnull.csv',
                               '9/session_1_labels_withoutnull.csv', '9/session_2_labels_withoutnull.csv', '9/session_3_labels_withoutnull.csv', '9/session_4_labels_withoutnull.csv', '9/session_5_labels_withoutnull.csv', '9/session_6_labels_withoutnull.csv', '9/session_7_labels_withoutnull.csv', '9/session_8_labels_withoutnull.csv', '9/session_9_labels_withoutnull.csv',
-                              '11/session_1_labels_withoutnull.csv', '11/session_2_labels_withoutnull.csv', '11/session_3_labels_withoutnull.csv', '11/session_4_labels_withoutnull.csv', '11/session_5_labels_withoutnull.csv', '11/session_6_labels_withoutnull.csv', '11/session_7_labels_withoutnull.csv', '11/session_8_labels_withoutnull.csv', '11/session_9_labels_withoutnull.csv'],
+                              '11/session_1_labels_withoutnull.csv', '11/session_2_labels_withoutnull.csv', '11/session_3_labels_withoutnull.csv', '11/session_4_labels_withoutnull.csv', '11/session_5_labels_withoutnull.csv', '11/session_6_labels_withoutnull.csv', '11/session_7_labels_withoutnull.csv', '11/session_8_labels_withoutnull.csv', '11/session_9_labels_withoutnull.csv',
+                              '10/session_1_labels_withoutnull.csv', '10/session_2_labels_withoutnull.csv', '10/session_3_labels_withoutnull.csv', '10/session_4_labels_withoutnull.csv', '10/session_5_labels_withoutnull.csv', '10/session_6_labels_withoutnull.csv', '10/session_7_labels_withoutnull.csv', '10/session_8_labels_withoutnull.csv', '10/session_9_labels_withoutnull.csv',
+                              '12/session_1_labels_withoutnull.csv', '12/session_2_labels_withoutnull.csv', '12/session_3_labels_withoutnull.csv', '12/session_4_labels_withoutnull.csv', '12/session_5_labels_withoutnull.csv', '12/session_6_labels_withoutnull.csv', '12/session_7_labels_withoutnull.csv', '12/session_8_labels_withoutnull.csv', '12/session_9_labels_withoutnull.csv'],
   # HTK train and test dirs
   'train_data_dir': './train-data',
   'test_data_dir' : './user1-test-data', #FIXME
@@ -45,7 +48,7 @@ config = {
 
   # number of features
   #'num_features'  : ((3*7)+7), # ecdf with 3 components + mean
-  'num_features'  : (7*4)+(3*7),
+  'num_features'  : (7*4)+(4*7),
 
   'write_train_files' : 1,
   'write_test_files' : 1,

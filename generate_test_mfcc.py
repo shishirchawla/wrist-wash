@@ -24,12 +24,9 @@ def main():
     activity_features = compute_features(df, config['num_features'])
     if activity_features.shape[0] != 0:
       writeFeaturesToHTK(activity_features, htk_file_name)
-      ## new create user dict with files
       user_id = test_file.split('/')[0]
-      session_dict[user_id].append(htk_file_name)
-      ## new end
-      # with open(os.path.join(path, "sessionlist.txt"), 'a') as sessionlist_file:
-      #   sessionlist_file.write(htk_file_name + "\n")
+      user_session = int(test_file.split('_')[1])
+      session_dict[(user_id, user_session)].append(htk_file_name)
 
   writeSessionFiles(session_dict)
 
@@ -50,7 +47,7 @@ def writeSessionFiles(session_dict):
 
   # write leave one session out files
   for segment_key, segment_files in session_dict.iteritems():
-    test_user_id = segment_key
+    test_user_id = segment_key[0]
     trainpath = './user' + test_user_id + '-train-data'
     testpath = './user' + test_user_id + '-test-data'
 
@@ -71,7 +68,8 @@ def writeSessionFiles(session_dict):
     testpath = './user' + user + '-test-data'
 
     for segment_key, segment_files in session_dict.iteritems():
-      train_user_id = segment_key
+      train_user_id = segment_key[0]
+      train_user_session = segment_key[1]
 
       if train_user_id != user:
         with open(os.path.join(trainpath, "sessionlist.txt"), 'a') as train_file:
@@ -81,6 +79,10 @@ def writeSessionFiles(session_dict):
         with open(os.path.join(testpath, "sessionlist.txt"), 'a') as test_file:
           for segment in segment_files:
             test_file.write(segment + newline)
+        if train_user_session in config['user_adapt_test_sessions']:
+          with open(os.path.join(testpath, "sessionlist-ua.txt"), 'a') as test_file:
+            for segment in segment_files:
+              test_file.write(segment + newline)
 
 def loadDataset(filepath):
   column_names = ['timestamp', 'id', 'ax', 'ay', 'az', 'gx', 'gy', 'gz', 'mic', 'activity']
@@ -144,7 +146,7 @@ def compute_features(df, num_features, window_size=int(float(config['sub_window_
     # Add ecdf
     # convert df to numpy matrix
     window_data = window_df.as_matrix(columns=['ax', 'ay', 'az', 'gx', 'gy', 'gz', 'mic'])
-    window_features = np.append(window_features, ecdf(window_data, components=3))
+    window_features = np.append(window_features, ecdf(window_data, components=4))
     window_features = np.append(window_features, stddev(window_data))
     window_features = np.append(window_features, skew(window_data))
     window_features = np.append(window_features, kurtosis(window_data))

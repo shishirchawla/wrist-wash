@@ -89,18 +89,28 @@ def writeLosoFiles(session_dict):
     trainpath = './user' + user + '-train-data'
     testpath = './user' + user + '-test-data'
 
-    with open(os.path.join(testpath, "testlist.txt"), 'a') as test_file:
+    for session in range(config['num_session_per_user']-2):
       for segment_key, segment_files in session_dict.iteritems():
         train_user_id = segment_key[0].split('/')[0]
+        train_user_session = int(segment_key[0].split('_')[1])
         activity_type = segment_key[1]
 
-        if train_user_id != user:
-          with open(os.path.join(trainpath, "trainlist"+"_act_"+str(activity_type)+".txt"), 'a') as train_file:
+        if train_user_id != user or train_user_session <= session:
+          ses_text = ""
+          if session > 0:
+            ses_text = "_ses_"+str(session)
+          with open(os.path.join(trainpath, "trainlist"+"_act_"+str(activity_type)+ses_text+".txt"), 'a') as train_file:
             for segment in segment_files:
               train_file.write(segment + newline)
-        else:
-          for segment in segment_files:
-            test_file.write(segment + newline)
+        if session == 0:
+          if train_user_id == user:
+            with open(os.path.join(testpath, "testlist.txt"), 'a') as test_file:
+              for segment in segment_files:
+                test_file.write(segment + newline)
+            if train_user_session in config['user_adapt_test_sessions']:
+              with open(os.path.join(testpath, "testlist-ua.txt"), 'a') as test_file:
+                for segment in segment_files:
+                  test_file.write(segment + newline)
 
   # write leave one session out files
   for segment_key, segment_files in session_dict.iteritems():
@@ -243,8 +253,10 @@ def compute_features(df, num_features, window_size=int(float(config['sub_window_
     # Add ecdf
     # convert df to numpy matrix
     window_data = window_df.as_matrix(columns=['ax', 'ay', 'az', 'gx', 'gy', 'gz', 'mic'])
-    window_features = np.append(window_features, ecdf(window_data, components=3))
+    window_features = np.append(window_features, ecdf(window_data, components=4))
+
     #window_features = np.append(window_features, mean(window_data))
+
     window_features = np.append(window_features, stddev(window_data))
     window_features = np.append(window_features, skew(window_data))
     window_features = np.append(window_features, kurtosis(window_data))
