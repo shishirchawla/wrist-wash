@@ -1,4 +1,5 @@
 .idea
+venv
 
 *-pred.txt
 *-truth.txt

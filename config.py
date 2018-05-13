@@ -48,8 +48,8 @@ config = {
 
   # number of features
   #'num_features'  : ((3*7)+7), # ecdf with 3 components + mean
-  #'num_features'  : (7*4)+(4*7),
-  'num_features'  : 7,
+  'num_features'  : (7*4)+(5*7),
+  #'num_features'  : 7,
 
   'write_train_files' : 1,
   'write_test_files' : 1,

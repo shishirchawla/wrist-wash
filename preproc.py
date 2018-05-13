@@ -49,11 +49,11 @@ def process_data(train_dir, train_files):
         continue
 
       htk_file_name = config['output_dir']+train_file+"_act_"+str(activity_type)+"_instance_"+str(activity_group_no)+".mfcc"
-      # activity_features = compute_features(df, config['num_features'])
-      activity_features = raw_data(df)
+      activity_features = compute_features(df, config['num_features'])
+      #activity_features = raw_data(df)
       if activity_features.shape[0] != 0:
-        # writeFeaturesToHTK(activity_features, htk_file_name)
-        writeRawDataToHTK(activity_features, htk_file_name)
+        writeFeaturesToHTK(activity_features, htk_file_name)
+        #writeRawDataToHTK(activity_features, htk_file_name)
         if config['loso']:
           session_dict[(train_file, activity_type)].append(htk_file_name)
         else:
@@ -284,10 +284,7 @@ def compute_features(df, num_features, window_size=int(float(config['sub_window_
     # Add ecdf
     # convert df to numpy matrix
     window_data = window_df.as_matrix(columns=['ax', 'ay', 'az', 'gx', 'gy', 'gz', 'mic'])
-    window_features = np.append(window_features, ecdf(window_data, components=4))
-
-    #window_features = np.append(window_features, mean(window_data))
-
+    window_features = np.append(window_features, ecdf(window_data, components=5))
     window_features = np.append(window_features, stddev(window_data))
     window_features = np.append(window_features, skew(window_data))
     window_features = np.append(window_features, kurtosis(window_data))
