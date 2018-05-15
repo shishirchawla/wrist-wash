@@ -67,11 +67,15 @@ do
   fi
 done
 
-# Embedded training FIXME
+## Embedded training
 #mkdir ./model/hmm4
 #mkdir ./model/hmm5
-#mkdir ./model/hmm6
-#HERest -S $train_data_dir/sessionlist.txt -H model/hmm$((train_steps))/all -M model/hmm$((train_steps+1)) hmmlist.txt
-#HERest -S $train_data_dir/sessionlist.txt -H model/hmm$((train_steps+1))/all -M model/hmm$((train_steps+2)) hmmlist.txt
-#HERest -S $train_data_dir/sessionlist.txt -H model/hmm$((train_steps+2))/all -M model/hmm$((train_steps+3)) hmmlist.txt
+#
+#if [ ${TYPE} = "lopo" ]; then
+#  HERest -S $train_data_dir/sessionlist.txt -H model/hmm$((train_steps))/all -M model/hmm$((train_steps+1)) hmmlist.txt
+#  HERest -S $train_data_dir/sessionlist.txt -H model/hmm$((train_steps+1))/all -M model/hmm$((train_steps+2)) hmmlist.txt
+#elif [ ${TYPE} = "loso" ]; then
+#  HERest -S $train_data_dir/sessionlist${SESSION}.txt -H model/hmm$((train_steps))/all -M model/hmm$((train_steps+1)) hmmlist.txt
+#  HERest -S $train_data_dir/sessionlist${SESSION}.txt -H model/hmm$((train_steps+1))/all -M model/hmm$((train_steps+2)) hmmlist.txt
+#fi
 

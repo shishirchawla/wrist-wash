@@ -2,7 +2,7 @@
 
 # script for LOSO
 
-users=(1 3 4 5 6 7 8 9 11)
+users=(1 2 3 4 5 6 7 8 9 11)
 #users=(2)
 sessions=(1 2 3 4 5 6 7 8 9)
 
@@ -34,6 +34,10 @@ do
       do
         echo $pred_last_line >> $pred_file
       done
+    elif [ "$count_diff" -lt 0 ]
+    then
+      count_diff=$(expr ${predcount} - ${gtcount})
+      gtac $pred_file | sed "1,${count_diff}d" | gtac > tmp && mv tmp $pred_file
     fi
 
     cat $gt_file >> $usr-truth.txt

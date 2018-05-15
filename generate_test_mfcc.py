@@ -149,7 +149,7 @@ def compute_features(df, num_features, window_size=int(float(config['sub_window_
     # Add ecdf
     # convert df to numpy matrix
     window_data = window_df.as_matrix(columns=['ax', 'ay', 'az', 'gx', 'gy', 'gz', 'mic'])
-    window_features = np.append(window_features, ecdf(window_data, components=5))
+    window_features = np.append(window_features, ecdf(window_data, components=config['num_ecdf_components']))
     window_features = np.append(window_features, stddev(window_data))
     window_features = np.append(window_features, skew(window_data))
     window_features = np.append(window_features, kurtosis(window_data))

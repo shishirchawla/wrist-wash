@@ -41,13 +41,42 @@ def generate_hmm_prototype(states, gausperstate, featurevectorlength):
     hmmproto.write('  <TransP> {}\n'.format(states))
 
     ## ALL FORWARD MODEL
+#    # first row
+#    prob = 1.0/(states-1)
+#    hmmproto.write('  0.0')
+#    for j in range(0, states-2):
+#      hmmproto.write(" {:.3f}".format(prob))
+#    last_prob = 1.0-(float("{:.3f}".format(prob))*(states-2))
+#    hmmproto.write(" {:.3f}".format(last_prob))
+#    hmmproto.write('\n')
+#    # middle rows
+#    for i in range(0, states-2):
+#      hmmproto.write(' ')
+#      prob = 1.0/(states-1-i)
+#      for j in range(0, i+1):
+#        hmmproto.write(' 0.0')
+#      for j in range(0, states-1-i-1):
+#        hmmproto.write(" {:.3f}".format(prob))
+#      last_prob = 1.0-(float("{:.3f}".format(prob))*(states-1-i-1))
+#      hmmproto.write(" {:.3f}".format(last_prob))
+#      hmmproto.write('\n')
+#    # last row
+#    hmmproto.write(' ')
+#    for i in range(0, states):
+#      hmmproto.write(' 0.0')
+#    hmmproto.write('\n')
+
+    ## N FORWARD MODEL
+    n = 2
     # first row
-    prob = 1.0/(states-1)
+    prob = 1.0/(n)
     hmmproto.write('  0.0')
-    for j in range(0, states-2):
+    for j in range(0, n-1):
       hmmproto.write(" {:.3f}".format(prob))
-    last_prob = 1.0-(float("{:.3f}".format(prob))*(states-2))
+    last_prob = 1.0-(float("{:.3f}".format(prob))*(n-1))
     hmmproto.write(" {:.3f}".format(last_prob))
+    for j in range(0, states-n-1):
+      hmmproto.write(' 0.0')
     hmmproto.write('\n')
     # middle rows
     for i in range(0, states-2):
@@ -55,10 +84,20 @@ def generate_hmm_prototype(states, gausperstate, featurevectorlength):
       prob = 1.0/(states-1-i)
       for j in range(0, i+1):
         hmmproto.write(' 0.0')
-      for j in range(0, states-1-i-1):
-        hmmproto.write(" {:.3f}".format(prob))
-      last_prob = 1.0-(float("{:.3f}".format(prob))*(states-1-i-1))
-      hmmproto.write(" {:.3f}".format(last_prob))
+      if i+n < states:
+        prob = 1.0/(n)
+        for j in range(0, n-1):
+          hmmproto.write(" {:.3f}".format(prob))
+        last_prob = 1.0-(float("{:.3f}".format(prob))*(n-1))
+        hmmproto.write(" {:.3f}".format(last_prob))
+        for j in range(0, states-n-1-i):
+          hmmproto.write(' 0.0')
+      else:
+        prob = 1.0/(states-i-1)
+        for j in range(0, states-i-1-1):
+          hmmproto.write(" {:.3f}".format(prob))
+        last_prob = 1.0-(float("{:.3f}".format(prob))*(states-i-1-1))
+        hmmproto.write(" {:.3f}".format(last_prob))
       hmmproto.write('\n')
     # last row
     hmmproto.write(' ')

@@ -37,6 +37,10 @@ do
         do
           echo $pred_last_line >> $pred_file
         done
+      elif [ "$count_diff" -lt 0 ]
+      then
+        count_diff=$(expr ${predcount} - ${gtcount})
+        gtac $pred_file | sed "1,${count_diff}d" | gtac > tmp && mv tmp $pred_file
       fi
 
       cat $gt_file >> ${usr}-truth-${num_sess}.txt
